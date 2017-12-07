@@ -2,6 +2,17 @@
     width: 50px;
     height: 50px;
     margin: 3px;
+    position: relative;
+}
+
+.box .solutionIndicator {
+    width: 7px;
+    height: 7px;
+    background-color: #00CC00;
+    border-radius: 50%;
+    position: relative;
+    top: 5px;
+    left: 5px;
 }
 
 .yellow {

@@ -57,14 +57,26 @@ class Grid extends React.Component {
   };
 
   render() {
+    let self = this;
     return (
       <div className="Grid">
         {this.props.grid.map((value, index) => {
           let color = 'black';
           if (value) {
-            color = 'yellow';
+            color = this.props.color;
           }
-          return <Box key={index} color={color} clicked={() => this.handleBoxClick(index)}/>
+
+          let solution = false;
+          if (self.props.solution.indexOf(index) >= 0) {
+            solution = true;
+          }
+          return <Box
+            key={index}
+            color={color}
+            inSolution={solution}
+            showSolution={this.props.showSolution}
+            clicked={() => this.handleBoxClick(index)}
+          />
         })}
       </div>
     );
@@ -73,7 +85,10 @@ class Grid extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    grid: state.currentGrid
+    grid: state.currentGrid,
+    color: state.color,
+    solution: state.solution,
+    showSolution: state.showSolution
   };
 };
 

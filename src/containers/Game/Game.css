@@ -2,4 +2,16 @@
     width: 300px;
     border: 2px solid black;
     margin: auto;
+    padding: 15px 5px;
+}
+
+.Game .buttons {
+    width: 275px;
+    margin: 5px auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.Game h1 {
+    margin: 0 0 10px 5px;
 }
