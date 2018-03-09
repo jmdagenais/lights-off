@@ -14,6 +14,24 @@ export const getLevelStartFromSolution = (solution) => {
 
 export const updateGridForIndex = (grid, index) => {
   let updatedGrid = grid.slice();
+
+  let indexesToChange = getIndexesToChange(index);
+
+  indexesToChange.forEach((idx) => {
+    updatedGrid[idx] = !updatedGrid[idx];
+  });
+
+  return updatedGrid;
+};
+
+const addSafeValue = (array, value) => {
+  if (value >= 0 && value <= 24) {
+    array.push(value);
+  }
+};
+
+// return the indexes to change color when a click is made on the grid
+export const getIndexesToChange = (index) => {
   const leftBorderIndexes = [0, 5, 10, 15, 20];
   const rightBorderIndexes = [4, 9, 14, 19, 24];
   let indexesToChange = [];
@@ -37,15 +55,5 @@ export const updateGridForIndex = (grid, index) => {
     addSafeValue(indexesToChange, index + 5);
   }
 
-  indexesToChange.forEach((idx) => {
-    updatedGrid[idx] = !updatedGrid[idx];
-  });
-
-  return updatedGrid;
-};
-
-const addSafeValue = (array, value) => {
-  if (value >= 0 && value <= 24) {
-    array.push(value);
-  }
+  return indexesToChange;
 };

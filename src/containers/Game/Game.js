@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Grid from "../Grid/Grid";
-import {restartLevel, showSolution, undo} from "../../store/actions";
+import {restartLevel, undo} from "../../store/actions";
 
 import './Game.css';
 
@@ -15,7 +15,6 @@ class Game extends Component {
             <h5>Turn all the cells to black</h5>
             <Grid />
             <div className="buttons">
-              <button className="btn btn-sm" onClick={this.props.showSolution}>Show answer</button>
               <div>
                 <button
                   className="btn btn-sm"
@@ -38,8 +37,7 @@ class Game extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     undoLastMove: () => { dispatch(undo()) },
-    restartLevel: () => { dispatch(restartLevel()) },
-    showSolution: () => { dispatch(showSolution()) }
+    restartLevel: () => { dispatch(restartLevel()) }
   }
 };
 

@@ -1,4 +1,4 @@
-import {RESTART_LEVEL, SHOW_SOLUTION, UNDO, UPDATE_GRID} from "./actions";
+import {RESTART_LEVEL, UNDO, UPDATE_GRID} from "./actions";
 import {updateGridForIndex} from "../utility";
 
 const initialGrid = [
@@ -13,10 +13,8 @@ const initialState = {
   currentGrid: initialGrid.slice(),
   solution: [15, 17, 19, 20, 22, 24],
   initialGrid: initialGrid,
-  initialSolution: [15, 17, 19, 20, 22, 24],
   clickPath: [],
-  color: 'yellow',
-  showSolution: false
+  color: 'yellow'
 };
 
 const reducer = (state = initialState, action) => {
@@ -28,11 +26,6 @@ const reducer = (state = initialState, action) => {
       return undoLastMove(state);
     case RESTART_LEVEL:
       return restartLevel(state);
-    case SHOW_SOLUTION:
-      return {
-        ...state,
-        showSolution: true
-      };
     default:
       return state;
   }
@@ -41,7 +34,6 @@ const reducer = (state = initialState, action) => {
 const updateGrid = (state, action) => {
   const updatedGrid = state.currentGrid.slice();
   const updatedClickPath = [...state.clickPath];
-  let updatedSolution = [...state.solution];
 
   action.payload.indexesToUpdate.forEach((index) => {
     updatedGrid[index] = !updatedGrid[index]
@@ -50,46 +42,24 @@ const updateGrid = (state, action) => {
   let index = action.payload.index;
   updatedClickPath.push(index);
 
-  // update solution
-  if(updatedSolution.indexOf(index) === -1) {
-    updatedSolution.push(index);
-  } else {
-    // remove index from updatedSolution
-    updatedSolution = updatedSolution.filter((value) => {
-      return value !== index;
-    })
-  }
-
   return {
     ...state,
     currentGrid: updatedGrid,
-    clickPath: updatedClickPath,
-    solution: updatedSolution
+    clickPath: updatedClickPath
   };
 };
 
 const undoLastMove = (state) => {
   let updatedClickPath = [...state.clickPath];
   let updatedGrid = [...state.currentGrid];
-  let updatedSolution = [...state.solution];
 
   const lastMove = updatedClickPath.pop();
   updatedGrid = updateGridForIndex(updatedGrid, lastMove);
 
-  if(updatedSolution.indexOf(lastMove) === -1) {
-    updatedSolution.push(lastMove);
-  } else {
-    // remove lastMove from updatedSolution
-    updatedSolution = updatedSolution.filter((value) => {
-      return value !== lastMove;
-    })
-  }
-
   return {
     ...state,
     clickPath: updatedClickPath,
-    currentGrid: updatedGrid,
-    solution: updatedSolution
+    currentGrid: updatedGrid
   }
 };
 
@@ -97,9 +67,7 @@ const restartLevel = (state) => {
   return {
     ...state,
     clickPath: [],
-    currentGrid: [...state.initialGrid],
-    solution: [...state.initialSolution],
-    showSolution: false
+    currentGrid: [...state.initialGrid]
   }
 };
 
