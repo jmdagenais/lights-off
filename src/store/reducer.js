@@ -14,7 +14,8 @@ const initialState = {
   solution: [15, 17, 19, 20, 22, 24],
   initialGrid: initialGrid,
   clickPath: [],
-  color: 'yellow'
+  color: 'yellow',
+  winning: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -34,6 +35,7 @@ const reducer = (state = initialState, action) => {
 const updateGrid = (state, action) => {
   const updatedGrid = state.currentGrid.slice();
   const updatedClickPath = [...state.clickPath];
+  let winning = false;
 
   action.payload.indexesToUpdate.forEach((index) => {
     updatedGrid[index] = !updatedGrid[index]
@@ -42,10 +44,20 @@ const updateGrid = (state, action) => {
   let index = action.payload.index;
   updatedClickPath.push(index);
 
+  //check if the level is complete (does the user win the game?)
+  let gridSum = updatedGrid.reduce((prev, next) => {
+    return prev + next;
+  }, 0);
+
+  if (gridSum === 0) {
+    winning = true;
+  }
+
   return {
     ...state,
     currentGrid: updatedGrid,
-    clickPath: updatedClickPath
+    clickPath: updatedClickPath,
+    winning: winning
   };
 };
 

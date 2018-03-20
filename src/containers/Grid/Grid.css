@@ -1,5 +1,6 @@
 .Grid {
     width: 280px;
+    height: 280px;
     display: flex;
     flex-wrap: wrap;
     margin: auto;

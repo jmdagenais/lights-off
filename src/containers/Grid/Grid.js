@@ -52,7 +52,8 @@ class Grid extends React.Component {
 const mapStateToProps = (state) => {
   return {
     grid: state.currentGrid,
-    color: state.color
+    color: state.color,
+    winning: state.winning
   };
 };
 
