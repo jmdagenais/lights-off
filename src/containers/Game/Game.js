@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Grid from "../Grid/Grid";
-import {restartLevel, undo} from "../../store/actions";
+import {nextLevel, restartLevel, undo} from "../../store/actions";
 
 import './Game.css';
 
@@ -11,7 +11,8 @@ class Game extends Component {
     render() {
         let winningOverlay = (
           <div className="game-overlay">
-            <span>Congratulation!</span>
+            <span>Congratulations!</span>
+            <a onClick={this.props.nextLevel}>Next level</a>
           </div>
         );
 
@@ -49,14 +50,16 @@ class Game extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    winning: state.winning
+    winning: state.winning,
+    currentLevel: state.level
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     undoLastMove: () => { dispatch(undo()) },
-    restartLevel: () => { dispatch(restartLevel()) }
+    restartLevel: () => { dispatch(restartLevel()) },
+    nextLevel: () => { dispatch(nextLevel()) }
   }
 };
 

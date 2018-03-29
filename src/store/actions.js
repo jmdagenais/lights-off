@@ -1,6 +1,7 @@
 export const UPDATE_GRID = 'UPDATE_GRID';
 export const UNDO = 'UNDO';
 export const RESTART_LEVEL = 'RESTART_LEVEL';
+export const NEXT_LEVEL = 'NEXT_LEVEL';
 
 export function updateGrid(index, indexesToUpdate) {
   return {
@@ -21,5 +22,11 @@ export function undo() {
 export function restartLevel() {
   return {
     type: RESTART_LEVEL
+  };
+}
+
+export function nextLevel() {
+  return {
+    type: NEXT_LEVEL
   };
 }

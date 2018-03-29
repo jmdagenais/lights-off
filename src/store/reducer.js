@@ -1,17 +1,17 @@
-import {RESTART_LEVEL, UNDO, UPDATE_GRID} from "./actions";
+import {NEXT_LEVEL, RESTART_LEVEL, UNDO, UPDATE_GRID} from "./actions";
 import {updateGridForIndex} from "../utility";
+import {LevelStore} from "../level-store";
 
-const initialGrid = [
-  0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0,
-  1, 0, 1, 0, 1,
-  0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0
-];
+const levelStore = new LevelStore();
+
+const firstLevel = 5;
+
+const initialGrid = levelStore.getLevelAt(firstLevel);
 
 const initialState = {
   currentGrid: initialGrid.slice(),
   solution: [15, 17, 19, 20, 22, 24],
+  level: firstLevel,
   initialGrid: initialGrid,
   clickPath: [],
   color: 'yellow',
@@ -27,6 +27,8 @@ const reducer = (state = initialState, action) => {
       return undoLastMove(state);
     case RESTART_LEVEL:
       return restartLevel(state);
+    case NEXT_LEVEL:
+      return changeLevel(state);
     default:
       return state;
   }
@@ -80,6 +82,21 @@ const restartLevel = (state) => {
     ...state,
     clickPath: [],
     currentGrid: [...state.initialGrid]
+  }
+};
+
+const changeLevel = (state) => {
+  let levelNumber = state.level + 1;
+  if (levelNumber > levelStore.getNumberOfLevel()) {
+    levelNumber = 1;
+  }
+  return {
+    ...state,
+    level: levelNumber,
+    initialGrid: levelStore.getLevelAt(levelNumber),
+    currentGrid: levelStore.getLevelAt(levelNumber),
+    clickPath: [],
+    winning: false
   }
 };
 

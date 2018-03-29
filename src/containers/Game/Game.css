@@ -22,14 +22,15 @@
 }
 
 .Game .game-overlay {
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items:center;
     width: 100%;
     height: 100%;
     z-index: 100;
     position: absolute;
     background-color: rgba(255, 255, 255, 0.75);
-    display:flex;
-    justify-content:center;
-    align-items:center;
 }
 
 .Game .game-overlay span {
