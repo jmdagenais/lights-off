@@ -1,16 +1,16 @@
-import {NEXT_LEVEL, RESTART_LEVEL, UNDO, UPDATE_GRID} from "./actions";
+import {NEXT_LEVEL, PREVIOUS_LEVEL, RESTART_LEVEL, UNDO, UPDATE_GRID} from "./actions";
 import {updateGridForIndex} from "../utility";
 import {LevelStore} from "../level-store";
 
 const levelStore = new LevelStore();
 
-const firstLevel = 5;
+const firstLevel = 1;
 
 const initialGrid = levelStore.getLevelAt(firstLevel);
 
 const initialState = {
   currentGrid: initialGrid.slice(),
-  solution: [15, 17, 19, 20, 22, 24],
+  solution: [], //[15, 17, 19, 20, 22, 24],
   level: firstLevel,
   initialGrid: initialGrid,
   clickPath: [],
@@ -28,7 +28,9 @@ const reducer = (state = initialState, action) => {
     case RESTART_LEVEL:
       return restartLevel(state);
     case NEXT_LEVEL:
-      return changeLevel(state);
+      return nextLevel(state);
+    case PREVIOUS_LEVEL:
+      return previousLevel(state);
     default:
       return state;
   }
@@ -46,6 +48,18 @@ const updateGrid = (state, action) => {
   let index = action.payload.index;
   updatedClickPath.push(index);
 
+  // test for solution
+  let newSol = [...state.solution];
+  if (newSol.includes(index)) {
+    newSol = newSol.filter((val) => {
+      return val !== index;
+    });
+  } else {
+    newSol.push(index);
+  }
+  console.log(newSol);
+  // ===============
+
   //check if the level is complete (does the user win the game?)
   let gridSum = updatedGrid.reduce((prev, next) => {
     return prev + next;
@@ -59,7 +73,8 @@ const updateGrid = (state, action) => {
     ...state,
     currentGrid: updatedGrid,
     clickPath: updatedClickPath,
-    winning: winning
+    winning: winning,
+    solution: newSol
   };
 };
 
@@ -85,11 +100,8 @@ const restartLevel = (state) => {
   }
 };
 
-const changeLevel = (state) => {
-  let levelNumber = state.level + 1;
-  if (levelNumber > levelStore.getNumberOfLevel()) {
-    levelNumber = 1;
-  }
+const changeLevel = (state, levelNumber) => {
+
   return {
     ...state,
     level: levelNumber,
@@ -98,6 +110,24 @@ const changeLevel = (state) => {
     clickPath: [],
     winning: false
   }
+};
+
+const nextLevel = (state) => {
+  let levelNumber = state.level + 1;
+  if (levelNumber > levelStore.getNumberOfLevel()) {
+    levelNumber = 1;
+  }
+
+  return changeLevel(state, levelNumber)
+};
+
+const previousLevel = (state) => {
+  let levelNumber = state.level - 1;
+  if (levelNumber === 0) {
+    levelNumber = levelStore.getNumberOfLevel();
+  }
+
+  return changeLevel(state, levelNumber);
 };
 
 export default reducer;
