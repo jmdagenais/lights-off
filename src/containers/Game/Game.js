@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Grid from "../Grid/Grid";
-import {nextLevel, previousLevel, restartLevel, undo} from "../../store/actions";
+import {nextLevel, previousLevel, restartLevel, showSolution, undo} from "../../store/actions";
 
 import './Game.css';
 
@@ -37,6 +37,7 @@ class Game extends Component {
             {winningOverlay}
             <Grid />
             <div className="buttons">
+              <button className="btn btn-sm" onClick={this.props.showSolution}>Show answer</button>
               <div>
                 <button
                   className="btn btn-sm"
@@ -69,7 +70,8 @@ const mapDispatchToProps = (dispatch) => {
     undoLastMove: () => { dispatch(undo()) },
     restartLevel: () => { dispatch(restartLevel()) },
     nextLevel: () => { dispatch(nextLevel()) },
-    previousLevel: () => { dispatch(previousLevel()) }
+    previousLevel: () => { dispatch(previousLevel()) },
+    showSolution: () => { dispatch(showSolution()) }
   }
 };
 

@@ -9,7 +9,9 @@ export const getLevelStartFromSolution = (solution) => {
   
   solution.forEach(value => {
     newGrid = updateGridForIndex(newGrid, value);
-  })
+  });
+
+  return newGrid;
 };
 
 export const updateGridForIndex = (grid, index) => {

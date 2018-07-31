@@ -39,8 +39,11 @@ class Grid extends React.Component {
           }
 
           return <Box
+            idx={index}
             key={index}
             color={color}
+            inSolution={this.props.solution.includes(index)}
+            showSolution={this.props.showSolution}
             clicked={() => this.handleBoxClick(index)}
           />
         })}
@@ -53,7 +56,9 @@ const mapStateToProps = (state) => {
   return {
     grid: state.currentGrid,
     color: state.color,
-    winning: state.winning
+    winning: state.winning,
+    showSolution: state.showSolution,
+    solution: state.solution
   };
 };
 

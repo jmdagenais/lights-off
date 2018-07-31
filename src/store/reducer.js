@@ -1,4 +1,4 @@
-import {NEXT_LEVEL, PREVIOUS_LEVEL, RESTART_LEVEL, UNDO, UPDATE_GRID} from "./actions";
+import {NEXT_LEVEL, PREVIOUS_LEVEL, RESTART_LEVEL, SHOW_SOLUTION, UNDO, UPDATE_GRID} from "./actions";
 import {updateGridForIndex} from "../utility";
 import {LevelStore} from "../level-store";
 
@@ -7,15 +7,17 @@ const levelStore = new LevelStore();
 const firstLevel = 1;
 
 const initialGrid = levelStore.getLevelAt(firstLevel);
+const initialSolution = levelStore.getSolutionAt(firstLevel);
 
 const initialState = {
   currentGrid: initialGrid.slice(),
-  solution: [], //[15, 17, 19, 20, 22, 24],
+  solution: initialSolution,
   level: firstLevel,
   initialGrid: initialGrid,
   clickPath: [],
   color: 'yellow',
-  winning: false
+  winning: false,
+  showSolution: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -31,6 +33,11 @@ const reducer = (state = initialState, action) => {
       return nextLevel(state);
     case PREVIOUS_LEVEL:
       return previousLevel(state);
+    case SHOW_SOLUTION:
+      return {
+        ...state,
+        showSolution: true
+      };
     default:
       return state;
   }
@@ -48,7 +55,7 @@ const updateGrid = (state, action) => {
   let index = action.payload.index;
   updatedClickPath.push(index);
 
-  // test for solution
+  // update solution
   let newSol = [...state.solution];
   if (newSol.includes(index)) {
     newSol = newSol.filter((val) => {
@@ -57,8 +64,7 @@ const updateGrid = (state, action) => {
   } else {
     newSol.push(index);
   }
-  console.log(newSol);
-  // ===============
+  // console.log(newSol);
 
   //check if the level is complete (does the user win the game?)
   let gridSum = updatedGrid.reduce((prev, next) => {
@@ -85,10 +91,23 @@ const undoLastMove = (state) => {
   const lastMove = updatedClickPath.pop();
   updatedGrid = updateGridForIndex(updatedGrid, lastMove);
 
+  // test for solution
+  let newSol = [...state.solution];
+  if (newSol.includes(lastMove)) {
+    newSol = newSol.filter((val) => {
+      return val !== lastMove;
+    });
+  } else {
+    newSol.push(lastMove);
+  }
+  console.log(newSol);
+  // =================
+
   return {
     ...state,
     clickPath: updatedClickPath,
-    currentGrid: updatedGrid
+    currentGrid: updatedGrid,
+    solution: newSol
   }
 };
 
@@ -96,8 +115,10 @@ const restartLevel = (state) => {
   return {
     ...state,
     clickPath: [],
-    currentGrid: [...state.initialGrid]
-  }
+    currentGrid: [...state.initialGrid],
+    solution: [...levelStore.getSolutionAt(state.level)],
+    showSolution: false
+  };
 };
 
 const changeLevel = (state, levelNumber) => {
@@ -108,8 +129,10 @@ const changeLevel = (state, levelNumber) => {
     initialGrid: levelStore.getLevelAt(levelNumber),
     currentGrid: levelStore.getLevelAt(levelNumber),
     clickPath: [],
-    winning: false
-  }
+    winning: false,
+    solution: [...levelStore.getSolutionAt(levelNumber)],
+    showSolution: false
+  };
 };
 
 const nextLevel = (state) => {
