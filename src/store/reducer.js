@@ -1,4 +1,4 @@
-import {NEXT_LEVEL, PREVIOUS_LEVEL, RESTART_LEVEL, SHOW_SOLUTION, UNDO, UPDATE_GRID} from "./actions";
+import {NEXT_LEVEL, PREVIOUS_LEVEL, RESTART_LEVEL, TOGGLE_SOLUTION, UNDO, UPDATE_GRID} from "./actions";
 import {updateGridForIndex} from "../utility";
 import {LevelStore} from "../level-store";
 
@@ -33,10 +33,10 @@ const reducer = (state = initialState, action) => {
       return nextLevel(state);
     case PREVIOUS_LEVEL:
       return previousLevel(state);
-    case SHOW_SOLUTION:
+    case TOGGLE_SOLUTION:
       return {
         ...state,
-        showSolution: true
+        showSolution: !state.showSolution
       };
     default:
       return state;

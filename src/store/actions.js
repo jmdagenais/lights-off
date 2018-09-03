@@ -3,7 +3,7 @@ export const UNDO = 'UNDO';
 export const RESTART_LEVEL = 'RESTART_LEVEL';
 export const NEXT_LEVEL = 'NEXT_LEVEL';
 export const PREVIOUS_LEVEL = 'PREVIOUS_LEVEL';
-export const SHOW_SOLUTION = 'SHOW_SOLUTION';
+export const TOGGLE_SOLUTION = 'TOGGLE_SOLUTION';
 
 export function updateGrid(index, indexesToUpdate) {
   return {
@@ -39,8 +39,8 @@ export function previousLevel() {
   };
 }
 
-export function showSolution() {
+export function toggleSolution() {
   return {
-    type: SHOW_SOLUTION
+    type: TOGGLE_SOLUTION
   };
 }

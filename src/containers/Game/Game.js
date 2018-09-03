@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Grid from "../Grid/Grid";
-import {nextLevel, previousLevel, restartLevel, showSolution, undo} from "../../store/actions";
+import {nextLevel, previousLevel, restartLevel, toggleSolution, undo} from "../../store/actions";
 
 import './Game.css';
 
@@ -18,6 +18,13 @@ class Game extends Component {
 
       if (!this.props.winning) {
         winningOverlay = null;
+      }
+
+      let toggleBtnLabel = '';
+      if (this.props.solutionVisible) {
+        toggleBtnLabel = 'Hide Solution';
+      } else {
+        toggleBtnLabel = 'Show Solution';
       }
 
       return (
@@ -37,7 +44,7 @@ class Game extends Component {
             {winningOverlay}
             <Grid />
             <div className="buttons">
-              <button className="btn btn-sm" onClick={this.props.showSolution}>Show answer</button>
+              <button className="btn btn-sm" onClick={this.props.toggleSolution}>{toggleBtnLabel}</button>
               <div>
                 <button
                   className="btn btn-sm"
@@ -61,7 +68,8 @@ class Game extends Component {
 const mapStateToProps = (state) => {
   return {
     winning: state.winning,
-    currentLevel: state.level
+    currentLevel: state.level,
+    solutionVisible: state.showSolution
   };
 };
 
@@ -71,7 +79,7 @@ const mapDispatchToProps = (dispatch) => {
     restartLevel: () => { dispatch(restartLevel()) },
     nextLevel: () => { dispatch(nextLevel()) },
     previousLevel: () => { dispatch(previousLevel()) },
-    showSolution: () => { dispatch(showSolution()) }
+    toggleSolution: () => { dispatch(toggleSolution()) }
   }
 };
 
