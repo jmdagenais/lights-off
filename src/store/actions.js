@@ -4,6 +4,7 @@ export const RESTART_LEVEL = 'RESTART_LEVEL';
 export const NEXT_LEVEL = 'NEXT_LEVEL';
 export const PREVIOUS_LEVEL = 'PREVIOUS_LEVEL';
 export const TOGGLE_SOLUTION = 'TOGGLE_SOLUTION';
+export const SAVE_SETTINGS = 'SAVE_SETTINGS';
 
 export function updateGrid(index, indexesToUpdate) {
   return {
@@ -42,5 +43,15 @@ export function previousLevel() {
 export function toggleSolution() {
   return {
     type: TOGGLE_SOLUTION
+  };
+}
+
+export function saveSettings(color, gameMode) {
+  return {
+    type: SAVE_SETTINGS,
+    payload: {
+      color,
+      mode: gameMode
+    }
   };
 }

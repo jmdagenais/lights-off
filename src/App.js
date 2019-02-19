@@ -2,8 +2,15 @@ import React, { Component } from 'react';
 import {Provider} from 'react-redux';
 import { createStore } from 'redux';
 
+// import { library } from '@fortawesome/fontawesome-svg-core'
+// import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
+
+
 import Game from "./containers/Game/Game";
 import reducer from "./store/reducer";
+
+// library.add(faCheck);
+// library.add(faTimes);
 
 let store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 

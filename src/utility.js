@@ -59,3 +59,29 @@ export const getIndexesToChange = (index) => {
 
   return indexesToChange;
 };
+
+// Diagonal mode
+export const getIndexesToChangeDiag = (index) => {
+  const leftBorderIndexes = [0, 5, 10, 15, 20];
+  const rightBorderIndexes = [4, 9, 14, 19, 24];
+  let indexesToChange = [];
+  if (leftBorderIndexes.indexOf(index) > -1) {
+    //left border
+    addSafeValue(indexesToChange, index);
+    addSafeValue(indexesToChange, index + 6);
+    addSafeValue(indexesToChange, index - 4);
+  } else if (rightBorderIndexes.indexOf(index) > -1) {
+    //right border
+    addSafeValue(indexesToChange, index);
+    addSafeValue(indexesToChange, index - 6);
+    addSafeValue(indexesToChange, index + 4);
+  } else {
+    addSafeValue(indexesToChange, index);
+    addSafeValue(indexesToChange, index - 6);
+    addSafeValue(indexesToChange, index + 6);
+    addSafeValue(indexesToChange, index - 4);
+    addSafeValue(indexesToChange, index + 4);
+  }
+
+  return indexesToChange;
+};

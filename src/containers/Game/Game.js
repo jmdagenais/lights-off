@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Grid from "../Grid/Grid";
+import Settings from '../Settings/Settings';
 import {nextLevel, previousLevel, restartLevel, toggleSolution, undo} from "../../store/actions";
 
 import './Game.css';
@@ -16,8 +17,18 @@ class Game extends Component {
         </div>
       );
 
+      let settingsOverlay = (
+        <div className="dark-overlay">
+          <Settings></Settings>
+        </div>
+      );
+
       if (!this.props.winning) {
         winningOverlay = null;
+      }
+
+      if (!this.props.showSettings) {
+        settingsOverlay = null;
       }
 
       let toggleBtnLabel = '';
@@ -29,6 +40,7 @@ class Game extends Component {
 
       return (
         <div className="Game">
+          {settingsOverlay}
           <h1>Lights off</h1>
           <div className="second-line">
             <h5>Turn all the cells to black</h5>
@@ -69,7 +81,8 @@ const mapStateToProps = (state) => {
   return {
     winning: state.winning,
     currentLevel: state.level,
-    solutionVisible: state.showSolution
+    solutionVisible: state.showSolution,
+    showSettings: state.showSettings
   };
 };
 
