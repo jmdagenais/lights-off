@@ -5,6 +5,7 @@ export const NEXT_LEVEL = 'NEXT_LEVEL';
 export const PREVIOUS_LEVEL = 'PREVIOUS_LEVEL';
 export const TOGGLE_SOLUTION = 'TOGGLE_SOLUTION';
 export const SAVE_SETTINGS = 'SAVE_SETTINGS';
+export const TOGGLE_SETTINGS = 'TOGGLE_SETTINGS';
 
 export function updateGrid(index, indexesToUpdate) {
   return {
@@ -52,6 +53,24 @@ export function saveSettings(color, gameMode) {
     payload: {
       color,
       mode: gameMode
+    }
+  };
+}
+
+export function showSettings() {
+  return {
+    type: TOGGLE_SETTINGS,
+    payload: {
+      visible: true
+    }
+  };
+}
+
+export function hideSettings() {
+  return {
+    type: TOGGLE_SETTINGS,
+    payload: {
+      visible: false
     }
   };
 }

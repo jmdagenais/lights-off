@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import Grid from "../Grid/Grid";
 import Settings from '../Settings/Settings';
-import {nextLevel, previousLevel, restartLevel, toggleSolution, undo} from "../../store/actions";
+import {nextLevel, previousLevel, restartLevel, showSettings, toggleSolution, undo} from "../../store/actions";
 
 import './Game.css';
 
@@ -27,7 +28,7 @@ class Game extends Component {
         winningOverlay = null;
       }
 
-      if (!this.props.showSettings) {
+      if (!this.props.settingsVisible) {
         settingsOverlay = null;
       }
 
@@ -41,6 +42,7 @@ class Game extends Component {
       return (
         <div className="Game">
           {settingsOverlay}
+          <a onClick={this.props.openSettings}><FontAwesomeIcon icon="cog" className="cog"></FontAwesomeIcon></a>
           <h1>Lights off</h1>
           <div className="second-line">
             <h5>Turn all the cells to black</h5>
@@ -82,7 +84,7 @@ const mapStateToProps = (state) => {
     winning: state.winning,
     currentLevel: state.level,
     solutionVisible: state.showSolution,
-    showSettings: state.showSettings
+    settingsVisible: state.showSettings
   };
 };
 
@@ -92,7 +94,8 @@ const mapDispatchToProps = (dispatch) => {
     restartLevel: () => { dispatch(restartLevel()) },
     nextLevel: () => { dispatch(nextLevel()) },
     previousLevel: () => { dispatch(previousLevel()) },
-    toggleSolution: () => { dispatch(toggleSolution()) }
+    toggleSolution: () => { dispatch(toggleSolution()) },
+    openSettings: () => { dispatch(showSettings()) }
   }
 };
 

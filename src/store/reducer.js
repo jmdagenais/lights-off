@@ -1,4 +1,7 @@
-import {NEXT_LEVEL, PREVIOUS_LEVEL, RESTART_LEVEL, SAVE_SETTINGS, TOGGLE_SOLUTION, UNDO, UPDATE_GRID} from "./actions";
+import {
+  NEXT_LEVEL, PREVIOUS_LEVEL, RESTART_LEVEL, SAVE_SETTINGS, TOGGLE_SETTINGS, TOGGLE_SOLUTION, UNDO,
+  UPDATE_GRID
+} from "./actions";
 import {updateGridForIndex} from "../utility";
 import {LevelStore} from "../level-store";
 
@@ -18,6 +21,7 @@ const initialState = {
   color: 'yellow',
   winning: false,
   showSolution: false,
+  showSettings: false,
   diagonalMode: false
 };
 
@@ -42,7 +46,13 @@ const reducer = (state = initialState, action) => {
     case SAVE_SETTINGS:
       return {
         ...state,
-        color: action.payload.color
+        color: action.payload.color,
+        showSettings: false
+      };
+    case TOGGLE_SETTINGS:
+      return {
+        ...state,
+        showSettings: action.payload.visible
       };
     default:
       return state;

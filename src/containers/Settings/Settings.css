@@ -1,0 +1,40 @@
+.Settings {
+    background-color: white;
+    border-radius: 5px;
+    width: 275px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    padding: 1px 10px 10px 10px;
+}
+
+.cell-color {
+    width: 50px;
+    height: 50px;
+    margin-right: 8px;
+    margin-top: 8px;
+    /*border-radius: 20%;*/
+    border: 1px solid #333333;
+}
+
+.selected-color {
+    border-width: 3px;
+}
+
+.colorPicker {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.settings-buttons {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.btn-ok, .btn-ok:hover, .btn-ok:focus {
+    color: green;
+}
+
+.btn-cancel, .btn-cancel:hover, .btn-cancel:focus {
+    color: red;
+}

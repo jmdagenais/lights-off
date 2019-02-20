@@ -65,3 +65,14 @@
     z-index: 100;
     background-color: rgba(0, 0, 0, 0.95);
 }
+
+.Game .cog {
+    margin-right: 5px;
+    float: right;
+    position: relative;
+    top: 3px;
+}
+
+.Game .cog, .Game .cog:hover, .Game .cog:focus {
+    color: black;
+}
