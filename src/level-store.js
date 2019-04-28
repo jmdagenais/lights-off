@@ -24,9 +24,9 @@ export class LevelStore {
     return this.levelSolutions.length;
   };
 
-  getLevelAt = (levelNumber) => {
+  getLevelAt = (levelNumber, mode) => {
     const solution = this.levelSolutions[levelNumber - 1];
-    const levelStart = getLevelStartFromSolution(solution);
+    const levelStart = getLevelStartFromSolution(solution, mode);
     return [ ...levelStart ];
   };
 

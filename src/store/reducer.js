@@ -4,6 +4,7 @@ import {
 } from "./actions";
 import {updateGridForIndex} from "../utility";
 import {LevelStore} from "../level-store";
+import Game from "../containers/Game/Game";
 
 const levelStore = new LevelStore();
 
@@ -22,7 +23,7 @@ const initialState = {
   winning: false,
   showSolution: false,
   showSettings: false,
-  diagonalMode: false
+  gameMode: Game.CLASSIC_MODE
 };
 
 const reducer = (state = initialState, action) => {
@@ -44,11 +45,7 @@ const reducer = (state = initialState, action) => {
         showSolution: !state.showSolution
       };
     case SAVE_SETTINGS:
-      return {
-        ...state,
-        color: action.payload.color,
-        showSettings: false
-      };
+      return saveSettings(state, action.payload);
     case TOGGLE_SETTINGS:
       return {
         ...state,
@@ -105,7 +102,7 @@ const undoLastMove = (state) => {
   let updatedGrid = [...state.currentGrid];
 
   const lastMove = updatedClickPath.pop();
-  updatedGrid = updateGridForIndex(updatedGrid, lastMove);
+  updatedGrid = updateGridForIndex(updatedGrid, lastMove, state.gameMode);
 
   // test for solution
   let newSol = [...state.solution];
@@ -142,8 +139,8 @@ const changeLevel = (state, levelNumber) => {
   return {
     ...state,
     level: levelNumber,
-    initialGrid: levelStore.getLevelAt(levelNumber),
-    currentGrid: levelStore.getLevelAt(levelNumber),
+    initialGrid: levelStore.getLevelAt(levelNumber, state.gameMode),
+    currentGrid: levelStore.getLevelAt(levelNumber, state.gameMode),
     clickPath: [],
     winning: false,
     solution: [...levelStore.getSolutionAt(levelNumber)],
@@ -167,6 +164,21 @@ const previousLevel = (state) => {
   }
 
   return changeLevel(state, levelNumber);
+};
+
+const saveSettings = (state, newSettings) => {
+  const newState = {
+    ...state,
+    color: newSettings.color,
+    gameMode: newSettings.mode,
+    showSettings: false
+  };
+
+  if (state.gameMode !== newState.gameMode) {
+    return changeLevel(newState, 1);
+  } else {
+    return newState;
+  }
 };
 
 export default reducer;

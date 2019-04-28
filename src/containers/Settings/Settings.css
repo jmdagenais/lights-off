@@ -17,7 +17,7 @@
     border: 1px solid #333333;
 }
 
-.selected-color {
+.Settings .selected {
     border-width: 3px;
 }
 
@@ -37,4 +37,31 @@
 
 .btn-cancel, .btn-cancel:hover, .btn-cancel:focus {
     color: red;
+}
+
+.mode-preview {
+    width: 75px;
+    height: 25px;
+    display: flex;
+}
+
+.mode-preview > div {
+    width: 33%;
+}
+
+.mode-preview > .dark {
+    background-color: #000000;
+}
+
+.mode-preview > .light {
+    background-color: yellow;
+}
+
+.mode-selector {
+    display: flex;
+    justify-content: space-around;
+}
+
+.mode-selector > div {
+    border: 1px solid #333333;
 }

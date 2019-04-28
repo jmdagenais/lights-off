@@ -10,6 +10,9 @@ import './Game.css';
 
 class Game extends Component {
 
+    static CLASSIC_MODE = 'classic';
+    static DIAGONAL_MODE = 'diagonal';
+
     render() {
       let winningOverlay = (
         <div className="game-overlay">

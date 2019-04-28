@@ -1,4 +1,6 @@
-export const getLevelStartFromSolution = (solution) => {
+import Game from "./containers/Game/Game";
+
+export const getLevelStartFromSolution = (solution, mode) => {
   let newGrid = [
     0, 0, 0, 0, 0,
     0, 0, 0, 0, 0,
@@ -8,16 +10,16 @@ export const getLevelStartFromSolution = (solution) => {
   ];
   
   solution.forEach(value => {
-    newGrid = updateGridForIndex(newGrid, value);
+    newGrid = updateGridForIndex(newGrid, value, mode);
   });
 
   return newGrid;
 };
 
-export const updateGridForIndex = (grid, index) => {
+export const updateGridForIndex = (grid, index, mode) => {
   let updatedGrid = grid.slice();
 
-  let indexesToChange = getIndexesToChange(index);
+  let indexesToChange = getIndexesToChange(index, mode);
 
   indexesToChange.forEach((idx) => {
     updatedGrid[idx] = !updatedGrid[idx];
@@ -33,7 +35,11 @@ const addSafeValue = (array, value) => {
 };
 
 // return the indexes to change color when a click is made on the grid
-export const getIndexesToChange = (index) => {
+export const getIndexesToChange = (index, mode) => {
+  if (mode === Game.DIAGONAL_MODE) {
+    return getIndexesToChangeDiag(index);
+  }
+
   const leftBorderIndexes = [0, 5, 10, 15, 20];
   const rightBorderIndexes = [4, 9, 14, 19, 24];
   let indexesToChange = [];

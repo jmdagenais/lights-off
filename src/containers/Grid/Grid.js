@@ -24,7 +24,7 @@ class Grid extends React.Component {
   };
 
   handleBoxClick = (index) => {
-    let indexesToChange = getIndexesToChange(index);
+    let indexesToChange = getIndexesToChange(index, this.props.mode);
 
     this.props.updateGrid(index, indexesToChange);
   };
@@ -58,7 +58,8 @@ const mapStateToProps = (state) => {
     color: state.color,
     winning: state.winning,
     showSolution: state.showSolution,
-    solution: state.solution
+    solution: state.solution,
+    mode: state.gameMode
   };
 };
 
